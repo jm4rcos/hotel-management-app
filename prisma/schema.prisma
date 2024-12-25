@@ -1,0 +1,56 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id            String        @id @default(uuid())
+  username      String        @unique
+  password      String
+  role          String        @default("EMPLOYEE") // Valid values: "ADMIN", "EMPLOYEE"
+  roomHistories RoomHistory[]
+}
+
+model Guest {
+  id            String        @id @default(uuid())
+  name          String // Nome obrigatório
+  email         String? // Email opcional
+  age           Int? // Idade opcional
+  phoneNumber   String? // Telefone opcional
+  roomHistories RoomHistory[]
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}
+
+model Room {
+  id            String        @id @default(uuid())
+  number        String        @unique // Número do quarto
+  bedType       String        @default("SINGLE") // Valid values: "SINGLE", "DOUBLE", "QUEEN", "KING"
+  numberOfBeds  Int
+  status        String        @default("FREE") // Valid values: "FREE", "OCCUPIED", "MAINTENANCE"
+  description   String
+  price         Float
+  roomHistories RoomHistory[]
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}
+
+model RoomHistory {
+  id        String   @id @default(uuid())
+  room      Room     @relation(fields: [roomId], references: [id])
+  roomId    String
+  guest     Guest    @relation(fields: [guestId], references: [id])
+  guestId   String
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  checkIn   DateTime
+  checkOut  DateTime
+  totalPaid Float
+  notes     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
