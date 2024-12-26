@@ -11,13 +11,13 @@ router.use(authMiddleware);
 
 // Rotas públicas (requer apenas autenticação)
 router.get('/', roomController.getAllRooms);
-router.get('/availability', roomController.getRoomAvailability);
+// router.get('/availability', roomController.getRoomAvailability);
 router.get('/:id', roomController.getRoom);
-router.get('/:id/history', roomController.getRoomHistory);
+// router.get('/:id/history', roomController.getRoomHistory);
 
 // Rotas de funcionário (requer autenticação)
-router.post('/checkin', validateCheckIn, roomController.checkIn);
-router.post('/checkout', validateCheckOut, roomController.checkOut);
+// router.post('/checkin', validateCheckIn, roomController.checkIn);
+// router.post('/checkout', validateCheckOut, roomController.checkOut);
 
 // Rotas administrativas (requer role ADMIN)
 // router.use(authorizeAdmin);

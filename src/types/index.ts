@@ -5,14 +5,56 @@ export interface User {
     role: 'admin' | 'employee';
 }
 
+export type BedType = 'SINGLE' | 'DOUBLE' | 'QUEEN' | 'KING';
+
 export interface Room {
-    id: string;
-    bedType: 'single' | 'double' | 'queen' | 'king';
-    numberOfBeds: number;
-    status: 'available' | 'occupied' | 'maintenance';
-    description: string;
-    pricePerNight: number;
+  id: string;
+  number: string;
+  bedType: BedType;
+  numberOfBeds: number;
+  status: 'FREE' | 'OCCUPIED' | 'MAINTENANCE';
+  description: string;
+  price: number;
+  roomHistories?: RoomHistory[];
+  createdAt: Date;
+  updatedAt: Date;
 }
+
+export interface UpdateRoomData {
+  number?: string;
+  bedType?: BedType;
+  numberOfBeds?: number;
+  status?: 'FREE' | 'OCCUPIED' | 'MAINTENANCE';
+  description?: string;
+  price?: number;
+}
+
+export interface RoomHistory {
+    id: string;
+    room: Room;
+    roomId: string;
+    guest: Guest;
+    guestId: string;
+    user: User;
+    userId: string;
+    checkIn: Date;
+    checkOut: Date;
+    totalPaid: number;
+    notes?: string;
+    createdAt: Date;
+    updatedAt: Date;
+  }
+
+  export interface Guest {
+    id: string;
+    name: string;
+    email?: string;
+    age?: number;
+    phoneNumber?: string;
+    roomHistories?: RoomHistory[];
+    createdAt: Date;
+    updatedAt: Date;
+  }
 
 export interface CheckIn {
     roomid: string;
